@@ -22,7 +22,7 @@ app.use(errorHandler);
 
 await connectMongoDB();
 
-const PORT = process.env.MONGO_UR ?? 3000;
+const PORT = process.env.MONGO_URL ?? 3000;
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
