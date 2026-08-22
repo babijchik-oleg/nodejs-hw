@@ -3,13 +3,12 @@ import createHttpError from 'http-errors';
 
 export const getAllNotes = async (req, res) => {
   const notes = await Note.find();
-
-  res.json(notes);
+  res.status(200).json(notes);
 };
 
 export const getNoteById = async (req, res) => {
-  const { id } = req.params;
-  const result = await Note.findById(id);
+  const { noteId } = req.params;
+  const result = await Note.findById(noteId);
   if (!result) {
     throw createHttpError(404, `Note not found`);
   }
@@ -22,8 +21,8 @@ export const createNote = async (req, res) => {
 };
 
 export const deleteNote = async (req, res) => {
-  const { id } = req.params;
-  const deleteNote = await Note.findOneAndDelete(id);
+  const { noteId } = req.params;
+  const deleteNote = await Note.findOneAndDelete({ _id: noteId });
   if (!deleteNote) {
     throw createHttpError(404, `Note not found`);
   }
@@ -31,8 +30,8 @@ export const deleteNote = async (req, res) => {
 };
 
 export const updateNote = async (req, res) => {
-  const { id } = req.params;
-  const updateNote = await Note.findByIdAndUpdate(id, req.body, {
+  const { noteId } = req.params;
+  const updateNote = await Note.findByIdAndUpdate(noteId, req.body, {
     returnDocument: 'after',
   });
   if (!updateNote) {
