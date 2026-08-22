@@ -1,12 +1,16 @@
+import { isHttpError } from 'http-errors';
+
 const errorHandler = (err, req, res, next) => {
   console.error(err);
 
-  const isProd = process.env.NODE_ENV === 'production';
+  const status = isHttpError(err)
+    ? err.status
+    : err.status || err.statusCode || 500;
 
-  res.status(500).json({
-    message: isProd
-      ? 'Something went wrong. Please try again later.'
-      : err.message,
+  const message = isHttpError(err) ? err.message : 'Something went wrong';
+
+  res.status(status).json({
+    message,
   });
 };
 
