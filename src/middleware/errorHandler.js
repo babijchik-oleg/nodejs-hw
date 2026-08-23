@@ -1,15 +1,15 @@
-import { isHttpError } from 'http-errors';
+import { HttpError } from 'http-errors';
 
-export const errorHandler = (err, req, res, next) => {
-  console.error(err);
-
-  if (err instanceof isHttpError) {
-    return res.status(err.status).json({
-      message: err.message,
+export const errorHandler = (error, req, res, next) => {
+  if (error instanceof HttpError) {
+    const { status = 500 } = error;
+    return res.status(status).json({
+      message: error.message || error.name,
     });
   }
-
+  const isProd = process.env.NODE_ENV === 'production';
+  const message = isProd ? 'Some error' : error.message;
   res.status(500).json({
-    message: err.message || 'Something went wrong',
+    message,
   });
 };
