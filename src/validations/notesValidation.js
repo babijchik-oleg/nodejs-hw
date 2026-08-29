@@ -1,6 +1,6 @@
 import { Segments, Joi } from 'celebrate';
 
-import { TAGS } from '../constants/tags';
+import { TAGS } from '../constants/tags.js';
 
 import { isValidObjectId } from 'mongoose';
 
