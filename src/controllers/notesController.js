@@ -1,4 +1,4 @@
-import Note from '../models/note.js';
+import { Note } from '../models/note.js';
 import createHttpError from 'http-errors';
 
 export const getAllNotes = async (req, res) => {
@@ -22,9 +22,11 @@ export const getAllNotes = async (req, res) => {
     });
   }
 
-  const totalNotes = await Note.countDocuments(myQuery.getFilter());
-
-  const notes = await myQuery.skip(skip).limit(perPage);
+  const filter = myQuery.getFilter();
+  const [totalNotes, notes] = await Promise.all([
+    Note.countDocuments(filter),
+    myQuery.skip(skip).limit(limit),
+  ]);
   const totalPages = Math.ceil(totalNotes / limit);
 
   res.status(200).json({
