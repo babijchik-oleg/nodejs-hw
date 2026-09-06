@@ -1,6 +1,6 @@
 import { Session } from '../models/session.js';
 import { randomUUID } from 'node:crypto';
-import { FIFTEEN_MINUTES, ONE_DAY } from '../constants/time';
+import { FIFTEEN_MINUTES, ONE_DAY } from '../constants/time.js';
 
 export const createSession = (userId) =>
   Session.create({
