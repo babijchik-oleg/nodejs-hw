@@ -1,9 +1,9 @@
-import session from '../models/session';
+import { Session } from '../models/session.js';
 import { randomUUID } from 'node:crypto';
 import { FIFTEEN_MINUTES, ONE_DAY } from '../constants/time';
 
 export const createSession = (userId) =>
-  session.create({
+  Session.create({
     userId,
     accessToken: randomUUID(),
     refreshToken: randomUUID(),

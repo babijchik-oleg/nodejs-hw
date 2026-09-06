@@ -26,8 +26,8 @@ authRouter.post(
   loginUser,
 );
 
-authRouter.post('/refresh', refreshUserSession);
+authRouter.post('/auth/refresh', refreshUserSession);
 
-authRouter.post('/logout', logoutUser);
+authRouter.post('/auth/logout', logoutUser);
 
 export default authRouter;
