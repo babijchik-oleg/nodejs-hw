@@ -2,7 +2,7 @@ import createHttpError from 'http-errors';
 import { Session } from '../models/session.js';
 import User from '../models/user.js';
 
-const authenticate = async (req, res, next) => {
+export const authenticate = async (req, res, next) => {
   const { sessionId, accessToken } = req.cookies;
   if (!sessionId || !accessToken) {
     throw createHttpError(401, 'Missing access token');
@@ -21,5 +21,3 @@ const authenticate = async (req, res, next) => {
   req.user = user;
   next();
 };
-
-export default authenticate;

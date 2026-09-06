@@ -41,10 +41,13 @@ export const loginUser = async (req, res) => {
   const session = await createSession(user._id);
   setSessionCookies(res, session);
 
+  const userWithoutPassword = user.toObject();
+  delete userWithoutPassword.password;
   res.status(200).json({
     status: 200,
     message: 'User logged in successfully',
     data: {
+      user: userWithoutPassword,
       accessToken: session.accessToken,
     },
   });
@@ -64,7 +67,7 @@ export const refreshUserSession = async (req, res) => {
   const isSessionExpired =
     new Date() > new Date(session.refreshTokenValidUntil);
 
-  if (!isSessionExpired) {
+  if (isSessionExpired) {
     await Session.deleteOne({ _id: sessionId, refreshToken });
     res.clearCookie('sessionId');
     res.clearCookie('accessToken');
@@ -90,7 +93,7 @@ export const refreshUserSession = async (req, res) => {
 export const logoutUser = async (req, res) => {
   const { sessionId } = req.cookies;
 
-  if (!sessionId) {
+  if (sessionId) {
     await Session.deleteOne({ _id: sessionId });
   }
 
