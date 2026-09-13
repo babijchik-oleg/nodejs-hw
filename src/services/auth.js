@@ -1,10 +1,6 @@
 import { Session } from '../models/session.js';
 import { randomUUID } from 'node:crypto';
 import { FIFTEEN_MINUTES, ONE_DAY } from '../constants/time.js';
-import { requestResetEmailSchema } from '../validations/authValidation.js';
-import { requestResetEmail } from '../controllers/authController.js';
-import { celebrate } from 'celebrate';
-import { Router } from 'express';
 
 export const createSession = (userId) =>
   Session.create({
@@ -35,9 +31,3 @@ export const setSessionCookies = (res, session) => {
     maxAge: ONE_DAY,
   });
 };
-
-Router.post(
-  '/auth/request-reset-email',
-  celebrate(requestResetEmailSchema),
-  requestResetEmail,
-);
