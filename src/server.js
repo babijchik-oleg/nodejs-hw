@@ -2,7 +2,7 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import { logger } from './middleware/logger.js';
-
+import userRoutes from './routes/userRoutes.js';
 import { connectMongoDB } from './db/connectMongoDB.js';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
 import { errorHandler } from './middleware/errorHandler.js';
@@ -21,6 +21,7 @@ app.use(cookieParser());
 app.use('/api/auth', authRoutes);
 
 app.use(notesRouter);
+app.use('/api/users', userRoutes);
 
 app.use(errors());
 app.use(notFoundHandler);
