@@ -18,13 +18,13 @@ app.use(logger);
 app.use(cors());
 app.use(cookieParser());
 
-app.use('/api/auth', authRoutes);
+app.use(authRoutes);
 
 app.use(notesRouter);
-app.use('/api/users', userRoutes);
+app.use(userRoutes);
 
-app.use(errors());
 app.use(notFoundHandler);
+app.use(errors());
 
 app.use(errorHandler);
 
